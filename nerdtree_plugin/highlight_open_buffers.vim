@@ -1,17 +1,14 @@
-" vim: foldmethod=marker
 " ============================================================================
 " Description: Plugin for NERD Tree that highlights open files
 " Inspiration: https://github.com/Xuyuanp/nerdtree-git-plugin
-" Maintainer:  Phil Runninger <philrunninger at gmail dot com>
-" Last Change: 4 Apr 2018
 " ============================================================================
-" Stop processing if already loaded.   {{{1
-if exists('g:loaded_nerdtree_highlight_open_buffers')
+" Stop processing if already loaded.
+if exists('s:loaded')
     finish
 endif
-let g:loaded_nerdtree_highlight_open_buffers = 1
+let s:loaded = 1
 
-" Setup NERDTree listener callback.   {{{1
+" Setup NERDTree listener callback.
 call g:NERDTreePathNotifier.AddListener('init', 'NERDTreeHighlightOpenBuffers')
 call g:NERDTreePathNotifier.AddListener('refresh', 'NERDTreeHighlightOpenBuffers')
 call g:NERDTreePathNotifier.AddListener('refreshFlags', 'NERDTreeHighlightOpenBuffers')
@@ -25,7 +22,7 @@ function! NERDTreeHighlightOpenBuffers(event)
     endif
 endfunction
 
-" Autocmds to trigger NERDTree flag refreshes   {{{1
+" Autocmds to trigger NERDTree flag refreshes
 augroup NERDTreeHighlightOpenBuffersPlugin
     autocmd BufDelete,BufWipeout * silent! set updatetime=100
     autocmd CursorHold,BufWritePost,BufReadPost  * silent! set updatetime& | call s:RefreshFlags()
@@ -44,7 +41,7 @@ function! s:RefreshFlags()
     endif
 endfunction
 
-" Setup the syntax highlighting   {{{1
+" Setup the syntax highlighting
 " The open_buffer_glyph is used just to find the line in NERDTree for syntax
 " highlighting. The line containing the glyph is highlighted (Special), and
 " then the flag itself is concealed.

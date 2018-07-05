@@ -1,14 +1,12 @@
 " ============================================================================
-" File:        bwipeout.vim
 " Description: plugin for NERD Tree that provides a buffer wipeout command
 " Notes:       The logic in NERDTreeBufWipeout is a modified version of that found here:
 "              http://vim.wikia.com/wiki/Deleting_a_buffer_without_closing_the_window
-" Maintainer:  Phil Runninger <prunninger at virtualhold dot com>
 " ============================================================================
-if exists("g:loaded_nerdtree_bwipeout")
+if exists("s:loaded")
     finish
 endif
-let g:loaded_nerdtree_bwipeout = 1
+let s:loaded = 1
 
 call NERDTreeAddKeyMap({
             \ 'key': 'w',
