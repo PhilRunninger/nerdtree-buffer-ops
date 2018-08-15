@@ -24,11 +24,13 @@ endfunction
 
 " Autocmds to trigger NERDTree flag refreshes
 augroup NERDTreeHighlightOpenBuffersPlugin
-    autocmd BufDelete,BufWipeout * silent! set updatetime=100
-    autocmd CursorHold,BufWritePost,BufReadPost  * silent! set updatetime& | call s:RefreshFlags()
+    autocmd CursorHold,BufEnter * silent! call s:RefreshFlags()
+    autocmd BufDelete,BufWipeout * silent! set updatetime=10
+    autocmd BufWritePost,BufReadPost  * silent! set updatetime& | call s:RefreshFlags()
 augroup END
 function! s:RefreshFlags()
-    if g:NERDTree.IsOpen() " NERDTree must be open.
+    if g:NERDTree.IsOpen() && !exists('s:stop_recursion')
+        let s:stop_recursion = 1
         let l:winnr = winnr()
         let l:altwinnr = winnr('#')
 
@@ -39,6 +41,7 @@ function! s:RefreshFlags()
         execute l:altwinnr . 'wincmd w'
         execute l:winnr . 'wincmd w'
     endif
+    unlet! s:stop_recursion
 endfunction
 
 " Setup the syntax highlighting
