@@ -48,14 +48,18 @@ endfunction
 " The open_buffer_glyph is used just to find the line in NERDTree for syntax
 " highlighting. The line containing the glyph is highlighted (Special), and
 " then the flag itself is concealed.
-let s:open_buffer_glyph='❖'
+let s:open_buffer_glyph='○'
 augroup AddHighlighting
     autocmd FileType nerdtree call s:AddHighlighting()
 augroup END
 function! s:AddHighlighting()
-    execute 'syntax match NERDTreeOpenBuffer #\[.\{-}' . s:open_buffer_glyph . '.\{-}\].\+$# containedin=NERDTreeFile,NERDTreeExecFile,NERDTreeRO'
-    highlight NERDTreeOpenBuffer ctermfg=118
-    execute 'syntax match hideFlagInNerdTree #\[.\{-}' . s:open_buffer_glyph . '.\{-}\]# conceal containedin=NERDTreeOpenBuffer'
-    setlocal conceallevel=2
+    execute 'syntax match NERDTreeOpenBuffer #\[.\{-}' . s:open_buffer_glyph . '.\{-}\].\+$# containedin=NERDTreeFile,NERDTreeLinkFile,NERDTreeExecFile,NERDTreeRO'
+    highlight default link NERDTreeOpenBuffer Constant
+
+    execute 'syntax match hideFlagInNerdTree #\[' . s:open_buffer_glyph . '.\].# conceal contains=NERDTreeNodeDelimiters containedin=NERDTreeOpenBuffer'
+    execute 'syntax match hideFlagInNerdTree #\[.\+\zs' . s:open_buffer_glyph . '\ze.\{-}\].# conceal contains=NERDTreeNodeDelimiters containedin=NERDTreeOpenBuffer'
+    execute 'syntax match hideFlagInNerdTree #\[.\{-}\zs' . s:open_buffer_glyph . '\ze.\+\].# conceal contains=NERDTreeNodeDelimiters containedin=NERDTreeOpenBuffer'
+    execute 'syntax match hideFlagInNerdTree #\[.\{-}' . s:open_buffer_glyph . '.\{-}\]\zs.\ze# conceal contains=NERDTreeNodeDelimiters containedin=NERDTreeOpenBuffer'
+    setlocal conceallevel=3
     setlocal concealcursor=nvic
 endfunction
