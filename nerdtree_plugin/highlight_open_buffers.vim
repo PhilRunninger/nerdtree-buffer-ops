@@ -56,10 +56,7 @@ function! s:AddHighlighting()
     execute 'syntax match NERDTreeOpenBuffer #\[.\{-}' . s:open_buffer_glyph . '.\{-}\].\+$# containedin=NERDTreeFile,NERDTreeLinkFile,NERDTreeExecFile,NERDTreeRO'
     highlight default link NERDTreeOpenBuffer Constant
 
-    execute 'syntax match hideFlagInNerdTree #\[' . s:open_buffer_glyph . '.\].# conceal contains=NERDTreeNodeDelimiters containedin=NERDTreeOpenBuffer'
-    execute 'syntax match hideFlagInNerdTree #\[.\+\zs' . s:open_buffer_glyph . '\ze.\{-}\].# conceal contains=NERDTreeNodeDelimiters containedin=NERDTreeOpenBuffer'
-    execute 'syntax match hideFlagInNerdTree #\[.\{-}\zs' . s:open_buffer_glyph . '\ze.\+\].# conceal contains=NERDTreeNodeDelimiters containedin=NERDTreeOpenBuffer'
-    execute 'syntax match hideFlagInNerdTree #\[.\{-}' . s:open_buffer_glyph . '.\{-}\]\zs.\ze# conceal contains=NERDTreeNodeDelimiters containedin=NERDTreeOpenBuffer'
+    execute 'syntax match NERDTreeOpenBufferFlag #\[.\{-}' . s:open_buffer_glyph . '.\{-}\].# conceal contains=NERDTreeNodeDelimiters containedin=NERDTreeOpenBuffer'
     setlocal conceallevel=3
     setlocal concealcursor=nvic
 endfunction
