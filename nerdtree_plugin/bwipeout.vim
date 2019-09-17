@@ -18,7 +18,7 @@ call NERDTreeAddKeyMap({
 function! NERDTreeBufWipeout(fileNode)
     let bufferNumber = bufnr(a:fileNode.path.str())
     if bufferNumber < 0 || !buflisted(bufferNumber)
-        call nerdtree#echo(a:fileNode.path.displayString(). " is not open in any buffer.")
+        call nerdtree#echo(fnamemodify(a:fileNode.path.str(),":t"). " is not open in any buffer.")
         return
     endif
 
@@ -45,5 +45,5 @@ function! NERDTreeBufWipeout(fileNode)
 
     execute 'confirm bwipeout'.' '.bufferNumber
     execute wcurrent.'wincmd w'
-    call nerdtree#echo("Buffer ". bufferNumber ." [". a:fileNode.path.displayString() ."] was wiped out.")
+    call nerdtree#echo("Buffer ". bufferNumber ." [". fnamemodify(a:fileNode.path.str(),":t") ."] was wiped out.")
 endfunction
