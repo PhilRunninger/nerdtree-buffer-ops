@@ -23,13 +23,9 @@ function! NERDTreeHighlightOpenBuffers(event)
 endfunction
 
 " Autocmds to trigger NERDTree flag refreshes
-let s:old_updatetime = &updatetime
 augroup NERDTreeHighlightOpenBuffersPlugin
     autocmd CursorHold,BufEnter * silent! call s:RefreshFlags()
-    autocmd BufDelete,BufWipeout * silent! set updatetime=10
-    autocmd BufWritePost,BufReadPost  * silent!
-                \ execute "set updatetime=".s:old_updatetime |
-                \ call s:RefreshFlags()
+    autocmd BufWritePost,BufReadPost  * silent! s:RefreshFlags()
 augroup END
 function! s:RefreshFlags()
     if g:NERDTree.IsOpen() && !exists('s:stop_recursion')
