@@ -24,7 +24,8 @@ endfunction
 
 " Autocmds to trigger NERDTree flag refreshes
 augroup NERDTreeHighlightOpenBuffersPlugin
-    autocmd CursorHold,BufEnter * silent! call s:RefreshFlags()
+    autocmd CursorHold * silent! call s:RefreshFlags()
+    autocmd BufEnter * if &buftype ==# '' | silent! call s:RefreshFlags() | endif
     autocmd BufWritePost,BufReadPost  * silent! s:RefreshFlags()
 augroup END
 function! s:RefreshFlags()
